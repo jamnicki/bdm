@@ -7,7 +7,7 @@ random.seed(21)
 _objective_score, _solution_days = None, None
 
 
-def tabu_search_result(P, B, ldm, d):
+def tabu_search_result(P, B, ldm, d, leap_year=False):
     for m in range(1, 13):
         ldm.append([])
         if m in (1, 3, 5, 7, 8, 10, 12):
@@ -15,14 +15,17 @@ def tabu_search_result(P, B, ldm, d):
         elif m in (4, 6, 9, 11):
             count = 30
         else:
-            count = 28
+            if leap_year:
+                count = 29
+            else:
+                count = 28
         for i in range(count):
             ldm[m-1].append(d)
             d += 1
 
     # functions needed to tabu serach
     def objective(sol):
-        X = [0] * 365
+        X = [0] * 366
         suma = 0
         for v in sol:
             X[v-1] = 1
@@ -53,7 +56,7 @@ def tabu_search_result(P, B, ldm, d):
         return newbestlist
 
     def replace(place, solcopy):
-        new = random.randint(1, 365)
+        new = random.randint(1, 366)
         flag = 0
         for i in solcopy:
             if new == i:

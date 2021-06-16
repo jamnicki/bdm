@@ -5,7 +5,7 @@ import numpy as np
 random.seed(21)
 
 
-def sa_result(P, B, ldm, d):
+def sa_result(P, B, ldm, d, leap_year=False):
     # tworzenie vektora z danymi dotyczącymi każdego dnia
     ldm = list()
     for m in range(1, 13):
@@ -15,7 +15,10 @@ def sa_result(P, B, ldm, d):
         elif m in (4, 6, 9, 11):
             count = 30
         else:
-            count = 28
+            if leap_year:
+                count = 29
+            else:
+                count = 28
         for i in range(count):
             ldm[m-1].append([d, P[d-1], 0])
             d += 1

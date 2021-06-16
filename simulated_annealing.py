@@ -73,7 +73,7 @@ def sa_result(P, B, ldm, d, leap_year=False):
             # później losujemy dowolne dni w roku, więc w teorii jest szansa,
             # że reszta wyników będzie tylko z jednego miesiąca
 
-            for z in range(0, 48):
+            for z in range(B-12):
                 msc = random.randint(1, 12)
                 if msc in (1, 3, 5, 7, 8, 10, 12):
                     count = 31

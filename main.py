@@ -11,7 +11,7 @@ from genetic import genetic_result
 random.seed(21)
 
 
-def mark_choosen_days(choosen_days):
+def mark_choosen_days(choosen_days, calendar_days_labels):
     for day in choosen_days:
         calendar_days_labels[day-1].config(bg='limegreen')
 
@@ -23,6 +23,16 @@ def clear_calendar(calendar_days_labels):
 
 def display_objective_score(objective_score):
     objective_score_label.config(text=f'F = {objective_score:.3f}')
+
+
+def fix_leap_day(leap_year):
+    if leap_year:
+        day_text = '29'
+    else:
+        day_text = ''
+
+    blank_day = tk.Label(months_frames[1], text=day_text, bd=6, bg='white')
+    blank_day.grid(row=4, column=0, sticky=tk.W)
 
 
 def solve():
@@ -39,6 +49,8 @@ def solve():
     method = METHOD_SELECTION.get()
     leap_year = LEAP_YEAR.get()
 
+    fix_leap_day(leap_year)
+
     if method == 1:
         OBJECTIVE_SCORE, SOLUTION_DAYS = solver_result(P, B, ldm, d, leap_year=leap_year)  # noqa: E501
     elif method == 2:
@@ -49,7 +61,7 @@ def solve():
         OBJECTIVE_SCORE, SOLUTION_DAYS = genetic_result(P, B, ldm, d, leap_year=leap_year)  # noqa: E501
 
     clear_calendar(calendar_days_labels)
-    mark_choosen_days(SOLUTION_DAYS)
+    mark_choosen_days(SOLUTION_DAYS, calendar_days_labels)
     display_objective_score(OBJECTIVE_SCORE)
 
 
@@ -144,7 +156,7 @@ if __name__ == "__main__":
     data_path_label.place(relx=0.002, rely=0.15)
 
     _B_entry = dev_var_entries[decision_variables_names.index('B')]
-    _B_entry.insert(tk.END, '30')
+    _B_entry.insert(tk.END, '40')
 
     data_path_entry.insert(tk.END, 'dec_variables.csv')
 

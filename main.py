@@ -74,6 +74,7 @@ if __name__ == "__main__":
     method_selection_values = [1, 2, 3, 4]
 
     root = tk.Tk()
+    root.title('BDM')
     root.geometry('1100x470')
     root.resizable(False, False)
 
